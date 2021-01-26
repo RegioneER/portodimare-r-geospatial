@@ -1,0 +1,21 @@
+version: "3.7"
+services:
+
+  r_geospatial:
+    restart: unless-stopped
+    build: .
+    container_name: r4${COMPOSE_PROJECT_NAME}
+    stdin_open: true
+    ports:
+      - "8787:8787"
+      - "9090:9090"
+    #command: bash -c "/init & python rpyserve.py --hostname 0.0.0.0 --port 9090 > /var/log/rpyserve.log"
+    #working_dir: /mnt/volumes/statics/static/script_r/
+    volumes:
+      - statics:/mnt/volumes/statics
+    env_file:
+      - ./scripts/docker/env/production/r_geospatial.env
+
+volumes:
+  statics:
+    name: ${COMPOSE_PROJECT_NAME}-statics
